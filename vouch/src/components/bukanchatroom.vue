@@ -41,6 +41,7 @@
 
 <script>
 import axios from "axios";
+import io from "socket.io-client";
 export default {
   name: "Enter",
   data() {
@@ -59,6 +60,8 @@ export default {
         message: `${this.username} has joined the room`
       };
       let create = await this.$socket.client.emit("joinRoom", data);
+      localStorage.setItem("username", this.username);
+      localStorage.setItem("roomname", this.roomname);
       if (create) {
         await this.$socket.client.on("status", data => {
           canlogin = data;
